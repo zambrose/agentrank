@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Env & secrets — NEVER commit credentials
+.env
+.env*.local
+*.env
+gcp-sa.json
+**/gcp-sa.json
+.config/agentrank/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Build/test scratch
+/tmp/
+coverage/
+.turbo/
+.vercel/

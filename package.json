@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "materialize": "node scripts/materialize.mjs",
+    "enrich": "node scripts/enrich.mjs",
     "bq": "node scripts/bq.mjs"
   },
   "dependencies": {

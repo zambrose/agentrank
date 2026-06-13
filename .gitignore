@@ -39,3 +39,6 @@ coverage/
 # snapshot data/agent_summary.json IS committed (it's the deploy artifact).
 data/metadata-cache.json
 data/ens-cache.json
+
+# Sub-agent worktrees (scratch)
+.claude/worktrees/

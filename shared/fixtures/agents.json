@@ -1,0 +1,178 @@
+[
+  {
+    "agentId": 29267,
+    "ownerAddress": "0x0000000000000000000000000000000000000000",
+    "tokenURI": null,
+    "registeredAt": "2026-01-29T10:31:11.000Z",
+    "registeredTx": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "feedbackCount": 1,
+    "uniqueClients": 1,
+    "scoreBreakdown": {
+      "positive": 1,
+      "neutral": 0,
+      "negative": 0
+    },
+    "avgRawScore": 100,
+    "reputationScore": 53.4474,
+    "effectiveFeedback": 0.3703,
+    "lastFeedbackAt": "2026-05-01T00:00:00Z",
+    "lastActivityAt": "2026-05-01T00:00:00Z",
+    "x402": false,
+    "computedAt": "2026-06-13T00:00:00.000Z",
+    "rank": 1
+  },
+  {
+    "agentId": 24667,
+    "ownerAddress": "0x0000000000000000000000000000000000000000",
+    "tokenURI": null,
+    "registeredAt": "2026-01-29T10:31:11.000Z",
+    "registeredTx": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "feedbackCount": 1,
+    "uniqueClients": 1,
+    "scoreBreakdown": {
+      "positive": 1,
+      "neutral": 0,
+      "negative": 0
+    },
+    "avgRawScore": 85,
+    "reputationScore": 51.7037,
+    "effectiveFeedback": 0.2558,
+    "lastFeedbackAt": "2026-04-15T00:00:00Z",
+    "lastActivityAt": "2026-04-15T00:00:00Z",
+    "x402": false,
+    "computedAt": "2026-06-13T00:00:00.000Z",
+    "rank": 2
+  },
+  {
+    "agentId": 22775,
+    "ownerAddress": "0x0000000000000000000000000000000000000000",
+    "tokenURI": null,
+    "registeredAt": "2026-01-29T10:31:11.000Z",
+    "registeredTx": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "feedbackCount": 1,
+    "uniqueClients": 1,
+    "scoreBreakdown": {
+      "positive": 1,
+      "neutral": 0,
+      "negative": 0
+    },
+    "avgRawScore": 72,
+    "reputationScore": 50.6005,
+    "effectiveFeedback": 0.1403,
+    "lastFeedbackAt": "2026-03-20T00:00:00Z",
+    "lastActivityAt": "2026-03-20T00:00:00Z",
+    "x402": false,
+    "computedAt": "2026-06-13T00:00:00.000Z",
+    "rank": 3
+  },
+  {
+    "agentId": 7,
+    "ownerAddress": "0x9ce7082814bda389f3ba548bdf2626006279569c",
+    "tokenURI": null,
+    "registeredAt": "2026-01-29T10:31:11.000Z",
+    "registeredTx": "0x132c8ea538e8210a3058dbbcff6f901e2ff7a8204d5c30db19d15cceeb4db791",
+    "feedbackCount": 0,
+    "uniqueClients": 0,
+    "scoreBreakdown": {
+      "positive": 0,
+      "neutral": 0,
+      "negative": 0
+    },
+    "avgRawScore": null,
+    "reputationScore": 50,
+    "effectiveFeedback": 0,
+    "lastFeedbackAt": null,
+    "lastActivityAt": "2026-01-29T10:31:11.000Z",
+    "x402": false,
+    "computedAt": "2026-06-13T00:00:00.000Z",
+    "rank": 4
+  },
+  {
+    "agentId": 50,
+    "ownerAddress": "0x9ce7082814bda389f3ba548bdf2626006279569c",
+    "tokenURI": null,
+    "registeredAt": "2026-01-29T10:31:11.000Z",
+    "registeredTx": "0x132c8ea538e8210a3058dbbcff6f901e2ff7a8204d5c30db19d15cceeb4db791",
+    "feedbackCount": 0,
+    "uniqueClients": 0,
+    "scoreBreakdown": {
+      "positive": 0,
+      "neutral": 0,
+      "negative": 0
+    },
+    "avgRawScore": null,
+    "reputationScore": 50,
+    "effectiveFeedback": 0,
+    "lastFeedbackAt": null,
+    "lastActivityAt": "2026-01-29T10:31:11.000Z",
+    "x402": false,
+    "computedAt": "2026-06-13T00:00:00.000Z",
+    "rank": 5
+  },
+  {
+    "agentId": 65,
+    "ownerAddress": "0x9ce7082814bda389f3ba548bdf2626006279569c",
+    "tokenURI": null,
+    "registeredAt": "2026-01-29T10:31:11.000Z",
+    "registeredTx": "0x132c8ea538e8210a3058dbbcff6f901e2ff7a8204d5c30db19d15cceeb4db791",
+    "feedbackCount": 0,
+    "uniqueClients": 0,
+    "scoreBreakdown": {
+      "positive": 0,
+      "neutral": 0,
+      "negative": 0
+    },
+    "avgRawScore": null,
+    "reputationScore": 50,
+    "effectiveFeedback": 0,
+    "lastFeedbackAt": null,
+    "lastActivityAt": "2026-01-29T10:31:11.000Z",
+    "x402": false,
+    "computedAt": "2026-06-13T00:00:00.000Z",
+    "rank": 6
+  },
+  {
+    "agentId": 23041,
+    "ownerAddress": "0x736e00357254de6c144daf7777fa3f21fdda9b84",
+    "tokenURI": "ipfs://QmdjB5YouJhoEu24Qz3J84fWfouktBnnNJicmMtGZdKFPU",
+    "registeredAt": "2026-01-29T10:31:11.000Z",
+    "registeredTx": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "feedbackCount": 0,
+    "uniqueClients": 0,
+    "scoreBreakdown": {
+      "positive": 0,
+      "neutral": 0,
+      "negative": 0
+    },
+    "avgRawScore": null,
+    "reputationScore": 50,
+    "effectiveFeedback": 0,
+    "lastFeedbackAt": null,
+    "lastActivityAt": "2026-01-29T10:31:11.000Z",
+    "x402": false,
+    "computedAt": "2026-06-13T00:00:00.000Z",
+    "rank": 7
+  },
+  {
+    "agentId": 23093,
+    "ownerAddress": "0xb877b827c59062446c4625fb64f06886aeeee1bd",
+    "tokenURI": "ipfs://QmX2J9LcQFGztpE7po4sw4Rc8Mv1drwshfJ3dzsCsGP6Xj",
+    "registeredAt": "2026-01-29T10:31:11.000Z",
+    "registeredTx": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "feedbackCount": 0,
+    "uniqueClients": 0,
+    "scoreBreakdown": {
+      "positive": 0,
+      "neutral": 0,
+      "negative": 0
+    },
+    "avgRawScore": null,
+    "reputationScore": 50,
+    "effectiveFeedback": 0,
+    "lastFeedbackAt": null,
+    "lastActivityAt": "2026-01-29T10:31:11.000Z",
+    "x402": false,
+    "computedAt": "2026-06-13T00:00:00.000Z",
+    "rank": 8
+  }
+]

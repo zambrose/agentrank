@@ -34,3 +34,8 @@ yarn-error.log*
 coverage/
 .turbo/
 .vercel/
+
+# Runtime caches written by the API/ENS layers (regenerable). The materialized
+# snapshot data/agent_summary.json IS committed (it's the deploy artifact).
+data/metadata-cache.json
+data/ens-cache.json

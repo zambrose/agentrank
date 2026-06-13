@@ -53,10 +53,36 @@ function resolveURI(tokenURI) {
   return tokenURI;
 }
 
-const X402_TOP_KEYS = new Set([
-  'x402', 'payment', 'accepts', 'paymentchannels', 'paymentschemes',
-  'paymentmethods', 'paymentendpoint', 'paymentrequired', 'monetization',
-  'payto', 'lightning', 'invoice',
+/**
+ * Parse an inline data: URI (RFC 2397) → JSON object or null.
+ * Supports data:...;base64,<b64> and data:...,<url-encoded>.
+ */
+function parseDataURI(tokenURI) {
+  if (!tokenURI.startsWith('data:')) return null;
+  try {
+    const commaIdx = tokenURI.indexOf(',');
+    if (commaIdx === -1) return null;
+    const header = tokenURI.slice(5, commaIdx);
+    const body   = tokenURI.slice(commaIdx + 1);
+    const isBase64 = header.endsWith(';base64');
+    const text = isBase64
+      ? Buffer.from(body, 'base64').toString('utf8')
+      : decodeURIComponent(body);
+    return JSON.parse(text);
+  } catch {
+    return null;
+  }
+}
+
+// Boolean keys: check the VALUE (truthy = x402 support).
+const X402_BOOLEAN_KEYS = new Set([
+  'x402', 'x402support', 'paymentrequired', 'payable',
+]);
+// Presence keys: non-empty value is sufficient signal.
+const X402_PRESENCE_KEYS = new Set([
+  'payment', 'accepts', 'paymentchannels', 'paymentschemes',
+  'paymentmethods', 'paymentendpoint', 'payto', 'lightning', 'invoice',
+  'monetization',
 ]);
 
 function detectX402(value, depth = 0) {
@@ -66,8 +92,15 @@ function detectX402(value, depth = 0) {
   if (value !== null && typeof value === 'object') {
     for (const [k, v] of Object.entries(value)) {
       const kl = k.toLowerCase();
-      if (X402_TOP_KEYS.has(kl)) return true;
-      if (kl.includes('x402') || kl.includes('payment')) return true;
+      if (X402_BOOLEAN_KEYS.has(kl)) {
+        if (v === true || v === 1 || v === 'true') return true;
+        continue; // explicit false — skip
+      }
+      if (X402_PRESENCE_KEYS.has(kl)) {
+        if (v !== null && v !== undefined && v !== '' &&
+            !(Array.isArray(v) && v.length === 0)) return true;
+        continue;
+      }
       if (detectX402(v, depth + 1)) return true;
     }
   }
@@ -85,6 +118,12 @@ async function fetchWithTimeout(url, ms) {
 }
 
 async function fetchMetadata(tokenURI) {
+  // Handle data: URIs inline — no network call.
+  if (tokenURI.startsWith('data:')) {
+    const raw = parseDataURI(tokenURI);
+    return { resolvedURI: tokenURI, raw, x402: raw ? detectX402(raw) : false, error: raw ? null : 'Failed to parse data: URI' };
+  }
+
   const resolvedURI = resolveURI(tokenURI);
   try {
     const res = await fetchWithTimeout(resolvedURI, FETCH_TIMEOUT_MS);

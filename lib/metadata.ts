@@ -112,24 +112,72 @@ function resolveURI(tokenURI: string): string {
   return tokenURI;
 }
 
+/**
+ * Parse an inline data: URI (RFC 2397) and return the decoded JSON object.
+ * Returns null if the URI is not a data: URI or cannot be parsed.
+ *
+ * Supported forms:
+ *   data:application/json;base64,<b64>
+ *   data:application/json,<url-encoded-json>
+ *   data:text/plain;base64,<b64>
+ *   data:text/plain,<json-text>
+ */
+function parseDataURI(tokenURI: string): Record<string, unknown> | null {
+  if (!tokenURI.startsWith('data:')) return null;
+  try {
+    const [header, ...rest] = tokenURI.slice(5).split(',');
+    const body = rest.join(',');
+    if (!body) return null;
+    const isBase64 = header.endsWith(';base64');
+
+    let text: string;
+    if (isBase64) {
+      text = Buffer.from(body, 'base64').toString('utf8');
+    } else {
+      text = decodeURIComponent(body);
+    }
+    return JSON.parse(text) as Record<string, unknown>;
+  } catch {
+    return null;
+  }
+}
+
 // ---------------------------------------------------------------------------
 // x402 detection
 // ---------------------------------------------------------------------------
 
-const X402_TOP_KEYS = new Set([
-  'x402', 'payment', 'accepts', 'paymentchannels', 'paymentschemes',
-  'paymentmethods', 'paymentendpoint', 'paymentrequired', 'monetization',
-  'payto', 'lightning', 'invoice',
+/**
+ * Detect x402 payment support in a parsed ERC-8004 registration JSON.
+ *
+ * Strategy:
+ *   1. Exact boolean fields: x402, x402support, paymentRequired → true only
+ *      when the value is explicitly truthy (boolean true or "true" string).
+ *   2. Presence-only fields: payment, paymentchannels, paymentschemes,
+ *      paymentmethods, paymentendpoint, accepts, payto — if they exist and
+ *      are non-empty, that signals payment support.
+ *   3. String scan: any string value that contains "x402" → true (catches
+ *      endpoint URLs like "https://example.com/x402/pay").
+ *   4. Recursive up to depth 4 for nested objects and arrays.
+ *
+ * We deliberately check the VALUE for boolean fields to avoid false positives
+ * from registrations that include "x402support: false".
+ */
+// Keys whose VALUE must be checked (truthy = support, falsy = no support).
+const X402_BOOLEAN_KEYS = new Set([
+  'x402', 'x402support', 'paymentrequired', 'payable',
+]);
+// Keys whose PRESENCE (non-null/non-empty value) signals payment support.
+const X402_PRESENCE_KEYS = new Set([
+  'payment', 'accepts', 'paymentchannels', 'paymentschemes',
+  'paymentmethods', 'paymentendpoint', 'payto', 'lightning', 'invoice',
+  'monetization',
 ]);
 
-/**
- * Walk a parsed JSON value recursively (up to depth 4) looking for any signal
- * of x402 / payment support. Returns true as soon as one signal is found.
- */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function detectX402(value: unknown, depth = 0): boolean {
   if (depth > 4) return false;
 
+  // String: look for "x402" in endpoints/URLs/descriptions.
   if (typeof value === 'string') {
     return value.toLowerCase().includes('x402');
   }
@@ -142,8 +190,21 @@ function detectX402(value: unknown, depth = 0): boolean {
     const obj = value as Record<string, unknown>;
     for (const [k, v] of Object.entries(obj)) {
       const kl = k.toLowerCase();
-      if (X402_TOP_KEYS.has(kl)) return true;
-      if (kl.includes('x402') || kl.includes('payment')) return true;
+
+      // Boolean gates: only true when the value itself is truthy.
+      if (X402_BOOLEAN_KEYS.has(kl)) {
+        if (v === true || v === 1 || v === 'true') return true;
+        continue; // Explicit false — don't recurse into the value.
+      }
+
+      // Presence gates: any non-null, non-empty value is a signal.
+      if (X402_PRESENCE_KEYS.has(kl)) {
+        if (v !== null && v !== undefined && v !== '' &&
+            !(Array.isArray(v) && v.length === 0)) return true;
+        continue;
+      }
+
+      // Otherwise recurse.
       if (detectX402(v, depth + 1)) return true;
     }
   }
@@ -198,7 +259,25 @@ export async function fetchMetadata(tokenURI: string | null): Promise<AgentMetad
     return diskHit;
   }
 
-  // 3. Network fetch
+  // 3a. data: URI — decode inline, no network call.
+  if (tokenURI.startsWith('data:')) {
+    const fetchedAt = new Date().toISOString();
+    const raw = parseDataURI(tokenURI);
+    const meta: AgentMetadata = {
+      resolvedURI: tokenURI,
+      raw,
+      x402: raw ? detectX402(raw) : false,
+      name:        extractString(raw, ['name', 'agentName', 'agent_name', 'title']),
+      description: extractString(raw, ['description', 'summary', 'about']),
+      fetchedAt,
+      error: raw ? null : 'Failed to parse data: URI',
+    };
+    cache.set(memKey, meta, raw ? TTL.METADATA : TTL.METADATA_ERROR);
+    setDiskEntry(tokenURI, meta);
+    return meta;
+  }
+
+  // 3b. Network fetch (http/https/ipfs)
   const resolvedURI = resolveURI(tokenURI);
   const fetchedAt = new Date().toISOString();
 

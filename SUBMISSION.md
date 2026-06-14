@@ -56,3 +56,39 @@ The data layer is pure BigQuery SQL against bigquery-public-data.crypto_ethereum
 3. Show the p5.js reputation-flow visualization.
 4. Live ENS resolver: type `vitalik.eth`, resolve against mainnet in real time.
 5. Cut to the BigQuery console: the materialize SQL + scheduled query — "the SQL is the product."
+
+---
+
+## Select prizes
+
+- **Track:** Building from Scratch
+- **Submission type:** Top 10 Finalist & Partner Prizes (requires Live Judging,
+  Sun Jun 14 09:30 EDT) — else "Partner Prizes only".
+- **Partner prizes (apply for these two only — we integrate exactly these):**
+
+**Google Cloud ($5,000)** — why applicable:
+```
+AgentRank runs on Google Cloud BigQuery as its core engine. We execute SQL directly against bigquery-public-data.crypto_ethereum.logs to decode ERC-8004 Identity + Reputation registry events by topic hash and compute a recency-weighted reputation score entirely in SQL, materialized into a BigQuery table and refreshed by a native BigQuery scheduled query. The app is deployed on Google Cloud Run. BigQuery is the product: it turns 3.7TB of raw mainnet logs into a ranked, searchable directory of 34,453 on-chain agents — a working on-chain agent economy explorer.
+```
+
+**ENS ($20,000)** — why applicable:
+```
+AgentRank performs real, live ENS resolution via viem against the ENS Universal Resolver on mainnet — never hard-coded. Every agent owner address is reverse-resolved to its primary ENS name, and we read ENS text records including ENSIP-25 agent-registration links and ENSIP-26 agent records (agent-context, agent-endpoint[mcp/a2a/web]) where set. The homepage also includes a live ENS resolver that forward- and reverse-resolves any name or address in real time. ENS is how we give 34k numeric agent IDs human-readable, verifiable identities.
+```
+
+---
+
+## Tech stack
+
+- **Ethereum developer tools:** viem (+ Etherscan for contract verification)
+- **Blockchain networks:** Ethereum
+- **Programming languages:** TypeScript, SQL, JavaScript
+- **Web frameworks:** Next.js, React
+- **Databases:** Google BigQuery
+- **Design tools:** none used (Tailwind CSS / Other if the field is required)
+- **Other technologies:** p5.js, ERC-8004, x402, ENS, IPFS, Google Cloud Run
+
+**How AI tools were used:**
+```
+AgentRank was built primarily with Claude Code, Anthropic's agentic CLI, using a multi-agent decomposition with human review of every change. It authored the BigQuery SQL layer — deriving ERC-8004 event topic hashes from the registry ABIs, writing the decode and recency-weighted reputation-scoring queries, and the materialization schema — plus the Next.js frontend, the viem-based ENS resolution (forward/reverse + ENSIP-25/26 text records), the tokenURI/x402 metadata fetcher, the p5.js reputation-flow visualization, and the Cloud Run/Vercel deploy configs.
+```

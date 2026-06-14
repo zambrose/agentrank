@@ -1,0 +1,10 @@
+.git
+node_modules
+.next
+.claude
+npm-debug.log*
+*.tsbuildinfo
+data/metadata-cache.json
+data/ens-cache.json
+README.md
+DEMO.md

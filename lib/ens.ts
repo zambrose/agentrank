@@ -331,6 +331,96 @@ export async function resolveAgentEnsProfile(
 }
 
 // ---------------------------------------------------------------------------
+// forwardResolve  (name → address)
+// ---------------------------------------------------------------------------
+
+/**
+ * Forward-resolve an ENS name to its Ethereum address.
+ *
+ * Uses viem `getEnsAddress` via the ENS Universal Resolver on mainnet. Safe to
+ * call from API routes — returns null on any error (bad name, RPC down, no
+ * address record).
+ *
+ * @param name  ENS name, e.g. "vitalik.eth".
+ * @returns  Checksummed 0x address or null.
+ */
+export async function forwardResolve(name: string): Promise<string | null> {
+  const key = `ens:forward:${name.toLowerCase()}`;
+  const cached = cache.get<string | null>(key);
+  if (cached !== undefined) return cached;
+  let addr: string | null = null;
+  try {
+    // normalize() guards against invalid/unsafe names per ENSIP-15.
+    const { normalize } = await import("viem/ens");
+    addr = await getClient().getEnsAddress({ name: normalize(name) });
+  } catch {
+    return null; // do not cache transient errors
+  }
+  cache.set(key, addr, TTL_ENS);
+  return addr;
+}
+
+// ---------------------------------------------------------------------------
+// lookupEns  (unified: accepts an address OR a name)
+// ---------------------------------------------------------------------------
+
+export interface EnsLookupResult {
+  /** Echo of the trimmed input. */
+  query: string;
+  /** Which direction we resolved. */
+  kind: "address" | "name" | "invalid";
+  /** Resolved/confirmed ENS name, or null. */
+  name: string | null;
+  /** Resolved/confirmed 0x address, or null. */
+  address: string | null;
+  /** A few ENS text records when a name is known (ENSIP-26 + common). */
+  records: Record<string, string | null>;
+}
+
+/**
+ * Live ENS lookup used by the homepage lookup box. Accepts either a 0x address
+ * (reverse-resolves) or an ENS name (forward-resolves), then reads a handful of
+ * text records (including the ENSIP-26 agent records) for whichever name we
+ * end up with. Real on-chain resolution — never throws.
+ */
+export async function lookupEns(input: string): Promise<EnsLookupResult> {
+  const query = input.trim();
+  const base: EnsLookupResult = { query, kind: "invalid", name: null, address: null, records: {} };
+  if (!query) return base;
+
+  const isAddress = /^0x[0-9a-fA-F]{40}$/.test(query);
+  const looksLikeName = query.includes(".");
+
+  let name: string | null = null;
+  let address: string | null = null;
+  let kind: EnsLookupResult["kind"] = "invalid";
+
+  if (isAddress) {
+    kind = "address";
+    address = query;
+    name = await reverseResolve(query);
+  } else if (looksLikeName) {
+    kind = "name";
+    name = query;
+    address = await forwardResolve(query);
+    if (!address) name = null; // name doesn't resolve to anything
+  } else {
+    return base;
+  }
+
+  const records: Record<string, string | null> = {};
+  if (name) {
+    const keys = ["avatar", "description", "url", "com.twitter", "agent-context", "agent-endpoint[web]"];
+    const vals = await Promise.all(keys.map((k) => getEnsText(name as string, k)));
+    keys.forEach((k, i) => {
+      if (vals[i]) records[k] = vals[i];
+    });
+  }
+
+  return { query, kind, name, address, records };
+}
+
+// ---------------------------------------------------------------------------
 // Compatibility alias (used by app/agent/[id]/page.tsx)
 // ---------------------------------------------------------------------------
 

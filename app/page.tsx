@@ -4,6 +4,7 @@
 import dynamic from "next/dynamic";
 import { loadAgents } from "@/lib/data";
 import AgentList from "@/components/AgentList";
+import EnsLookup from "@/components/EnsLookup";
 import type { AgentSummary } from "@/shared/schema";
 
 // p5.js visualization — client-only, no SSR
@@ -98,6 +99,11 @@ export default function Home() {
             <span className="text-bad"> red = low</span>.
             Size scales with feedback volume. Glowing sparks = active in the last 7 days.
           </p>
+        </section>
+
+        {/* ── Live ENS resolver ──────────────────────────────────── */}
+        <section>
+          <EnsLookup />
         </section>
 
         {/* ── Ranked list ────────────────────────────────────────── */}

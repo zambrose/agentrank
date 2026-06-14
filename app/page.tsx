@@ -34,6 +34,20 @@ export default function Home() {
   const initialAgents = rows.slice(0, 50);
   const { totalFeedback, ratedAgents, x402Agents } = computeStats(rows);
 
+  // Slim, pre-sampled dataset for the client viz. Passing all 34k rows would
+  // blow past Vercel's ~19 MB prerendered-payload cap; the viz only needs three
+  // fields and renders ≤500 nodes, so sample rated-first server-side.
+  const VIZ_MAX = 500;
+  const rated = rows.filter((a) => a.feedbackCount > 0);
+  const unrated = rows.filter((a) => a.feedbackCount === 0);
+  const vizAgents = [...rated, ...unrated]
+    .slice(0, VIZ_MAX)
+    .map((a) => ({
+      reputationScore: a.reputationScore,
+      feedbackCount: a.feedbackCount,
+      lastActivityAt: a.lastActivityAt,
+    }));
+
   return (
     <main className="min-h-screen" style={{ background: "#0a0e17" }}>
       {/* ── Header ─────────────────────────────────────────────── */}
@@ -90,7 +104,7 @@ export default function Home() {
             </span>
           </div>
           <div className="rounded-xl border border-slate-800 overflow-hidden" style={{ background: "#080c14" }}>
-            <ReputationFlow agents={rows} width={900} height={420} />
+            <ReputationFlow agents={vizAgents} width={900} height={420} />
           </div>
           <p className="mt-1.5 text-xs text-slate-600">
             Each node is a registered ERC-8004 agent. Color encodes reputation:

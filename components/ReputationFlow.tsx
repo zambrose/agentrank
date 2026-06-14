@@ -13,8 +13,19 @@
 import { useEffect, useRef } from "react";
 import type { AgentSummary } from "@/shared/schema";
 
+/**
+ * The viz only needs three fields. Narrowing the prop (rather than taking the
+ * full AgentSummary) keeps the homepage from serializing all 34k rows into the
+ * prerendered page payload — Vercel caps a prerendered response at ~19 MB.
+ * The page pre-samples to ≤500 slim rows server-side.
+ */
+export type VizAgent = Pick<
+  AgentSummary,
+  "reputationScore" | "feedbackCount" | "lastActivityAt"
+>;
+
 interface Props {
-  agents: AgentSummary[];
+  agents: VizAgent[];
   width?: number;
   height?: number;
 }
@@ -42,7 +53,7 @@ export default function ReputationFlow({ agents, width = 900, height = 420 }: Pr
     // Sample down to 500 nodes max for perf
     const SAMPLE = 500;
     const now = Date.now();
-    const sample: AgentSummary[] =
+    const sample: VizAgent[] =
       agents.length <= SAMPLE
         ? agents
         : (() => {

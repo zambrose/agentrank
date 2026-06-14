@@ -1,5 +1,5 @@
 // =============================================================================
-// shared/schema.ts  —  LOCKED OUTPUT CONTRACT for AgentRank
+// shared/schema.ts  —  LOCKED OUTPUT CONTRACT for AgentDex
 // =============================================================================
 // This is the single source of truth for the shape of a ranked agent row.
 // The BigQuery materialized table `agentrank-499305.agentrank.agent_summary`

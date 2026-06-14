@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// AgentRank BigQuery runner. Reusable by the api-caching agent.
+// AgentDex BigQuery runner. Reusable by the api-caching agent.
 //
 // Usage:
 //   node scripts/bq.mjs dry  <file.sql | -e "SELECT ...">   # dry-run, prints bytes

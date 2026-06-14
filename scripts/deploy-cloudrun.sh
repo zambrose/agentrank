@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# scripts/deploy-cloudrun.sh — build + deploy AgentRank to Google Cloud Run
+# scripts/deploy-cloudrun.sh — build + deploy AgentDex to Google Cloud Run
 # =============================================================================
 # Prereqs (run once):
 #   gcloud auth login

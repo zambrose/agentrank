@@ -1,4 +1,4 @@
-# AgentRank — ETHGlobal NY 2026 submission copy
+# AgentDex — ETHGlobal NY 2026 submission copy
 
 Paste-ready values for the ETHGlobal project form. Char limits verified.
 
@@ -6,7 +6,7 @@ Paste-ready values for the ETHGlobal project form. Char limits verified.
 
 ## Project details
 
-**Project name:** `AgentRank`
+**Project name:** `AgentDex`
 
 **Category:** `Infrastructure`
 
@@ -21,7 +21,7 @@ Ranks ERC-8004 agents by on-chain reputation computed in BigQuery; flags x402 ag
 
 **Description** (≥280):
 ```
-AgentRank is an explorer for the emerging ERC-8004 agent economy on Ethereum mainnet. It ranks autonomous agents by an on-chain reputation score computed entirely in BigQuery SQL over raw chain logs — decoding the Identity Registry (ERC-721 mints) and Reputation Registry feedback events directly by topic hash, then scoring each agent by feedback volume, score distribution, and recency. The result is a searchable, filterable leaderboard of 34,000+ registered agents, each with a detail page showing reputation, owner, and metadata. Agents that accept x402 micropayments are flagged from their tokenURI registration files. Owner addresses reverse-resolve to ENS names with ENSIP-25/26 agent text records surfaced where set, and a live ENS resolver resolves any name or address against mainnet in real time. The reputation SQL is the product — the UI never touches raw logs.
+AgentDex is an explorer for the emerging ERC-8004 agent economy on Ethereum mainnet. It ranks autonomous agents by an on-chain reputation score computed entirely in BigQuery SQL over raw chain logs — decoding the Identity Registry (ERC-721 mints) and Reputation Registry feedback events directly by topic hash, then scoring each agent by feedback volume, score distribution, and recency. The result is a searchable, filterable leaderboard of 34,000+ registered agents, each with a detail page showing reputation, owner, and metadata. Agents that accept x402 micropayments are flagged from their tokenURI registration files. Owner addresses reverse-resolve to ENS names with ENSIP-25/26 agent text records surfaced where set, and a live ENS resolver resolves any name or address against mainnet in real time. The reputation SQL is the product — the UI never touches raw logs.
 ```
 
 **How it's made** (≥280):
@@ -68,12 +68,12 @@ The data layer is pure BigQuery SQL against bigquery-public-data.crypto_ethereum
 
 **Google Cloud ($5,000)** — why applicable:
 ```
-AgentRank runs on Google Cloud BigQuery as its core engine. We execute SQL directly against bigquery-public-data.crypto_ethereum.logs to decode ERC-8004 Identity + Reputation registry events by topic hash and compute a recency-weighted reputation score entirely in SQL, materialized into a BigQuery table and refreshed by a native BigQuery scheduled query. The app is deployed on Google Cloud Run. BigQuery is the product: it turns 3.7TB of raw mainnet logs into a ranked, searchable directory of 34,453 on-chain agents — a working on-chain agent economy explorer.
+AgentDex runs on Google Cloud BigQuery as its core engine. We execute SQL directly against bigquery-public-data.crypto_ethereum.logs to decode ERC-8004 Identity + Reputation registry events by topic hash and compute a recency-weighted reputation score entirely in SQL, materialized into a BigQuery table and refreshed by a native BigQuery scheduled query. The app is deployed on Google Cloud Run. BigQuery is the product: it turns 3.7TB of raw mainnet logs into a ranked, searchable directory of 34,453 on-chain agents — a working on-chain agent economy explorer.
 ```
 
 **ENS ($20,000)** — why applicable:
 ```
-AgentRank performs real, live ENS resolution via viem against the ENS Universal Resolver on mainnet — never hard-coded. Every agent owner address is reverse-resolved to its primary ENS name, and we read ENS text records including ENSIP-25 agent-registration links and ENSIP-26 agent records (agent-context, agent-endpoint[mcp/a2a/web]) where set. The homepage also includes a live ENS resolver that forward- and reverse-resolves any name or address in real time. ENS is how we give 34k numeric agent IDs human-readable, verifiable identities.
+AgentDex performs real, live ENS resolution via viem against the ENS Universal Resolver on mainnet — never hard-coded. Every agent owner address is reverse-resolved to its primary ENS name, and we read ENS text records including ENSIP-25 agent-registration links and ENSIP-26 agent records (agent-context, agent-endpoint[mcp/a2a/web]) where set. The homepage also includes a live ENS resolver that forward- and reverse-resolves any name or address in real time. ENS is how we give 34k numeric agent IDs human-readable, verifiable identities.
 ```
 
 ---
@@ -90,5 +90,5 @@ AgentRank performs real, live ENS resolution via viem against the ENS Universal 
 
 **How AI tools were used:**
 ```
-AgentRank was built primarily with Claude Code, Anthropic's agentic CLI, using a multi-agent decomposition with human review of every change. It authored the BigQuery SQL layer — deriving ERC-8004 event topic hashes from the registry ABIs, writing the decode and recency-weighted reputation-scoring queries, and the materialization schema — plus the Next.js frontend, the viem-based ENS resolution (forward/reverse + ENSIP-25/26 text records), the tokenURI/x402 metadata fetcher, the p5.js reputation-flow visualization, and the Cloud Run/Vercel deploy configs.
+AgentDex was built primarily with Claude Code, Anthropic's agentic CLI, using a multi-agent decomposition with human review of every change. It authored the BigQuery SQL layer — deriving ERC-8004 event topic hashes from the registry ABIs, writing the decode and recency-weighted reputation-scoring queries, and the materialization schema — plus the Next.js frontend, the viem-based ENS resolution (forward/reverse + ENSIP-25/26 text records), the tokenURI/x402 metadata fetcher, the p5.js reputation-flow visualization, and the Cloud Run/Vercel deploy configs.
 ```

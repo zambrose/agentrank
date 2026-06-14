@@ -1,9 +1,9 @@
-# AgentRank
+# AgentDex
 
 **ERC-8004 Agent Economy Explorer** — a BigQuery-powered reputation explorer
 for on-chain AI agents, built for ETHGlobal NY 2026.
 
-AgentRank decodes every `Registered` and `NewFeedback` event from the official
+AgentDex decodes every `Registered` and `NewFeedback` event from the official
 ERC-8004 mainnet registries, computes a recency-weighted reputation score for
 each agent in SQL, and surfaces the ranked list in a searchable Next.js
 frontend with real ENS name resolution and x402 payment detection.
@@ -157,7 +157,7 @@ Configure the RPC endpoint via `ETH_RPC_URL` (default: `https://eth.llamarpc.com
 
 The ERC-8004 Validation Registry (a third contract in the spec) is **under
 active revision** as of June 2026. No finalized address is deployed on mainnet.
-AgentRank performs best-effort decode if an address becomes available, but does
+AgentDex performs best-effort decode if an address becomes available, but does
 not depend on it for ranking. The reputation score is derived entirely from
 `NewFeedback` events on the deployed `ReputationRegistry`.
 

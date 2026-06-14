@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# scripts/schedule-query.sh — register the AgentRank BigQuery scheduled query
+# scripts/schedule-query.sh — register the AgentDex BigQuery scheduled query
 # =============================================================================
 # Keeps `agentrank-499305.agentrank.agent_summary` fresh by re-running the
 # materialize DDL (sql/05_materialize.sql) on a cron via BigQuery Data Transfer

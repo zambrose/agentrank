@@ -1,5 +1,5 @@
 // =============================================================================
-// app/page.tsx — AgentRank home: ranked list + Reputation Flow visualization
+// app/page.tsx — AgentDex home: ranked list + Reputation Flow visualization
 // =============================================================================
 import dynamic from "next/dynamic";
 import { loadAgents } from "@/lib/data";
@@ -55,7 +55,7 @@ export default function Home() {
         <div className="mx-auto max-w-6xl flex items-center justify-between">
           <div>
             <h1 className="text-xl font-bold text-accent tracking-tight">
-              AgentRank
+              AgentDex
             </h1>
             <p className="text-xs text-slate-500 mt-0.5">
               ERC-8004 Agent Economy Explorer · Ethereum mainnet

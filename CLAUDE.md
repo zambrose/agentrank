@@ -1,4 +1,4 @@
-# AgentRank — ERC-8004 Agent Economy Explorer (ETHGlobal NY 2026)
+# AgentDex — ERC-8004 Agent Economy Explorer (ETHGlobal NY 2026)
 
 A BigQuery-powered explorer that ranks ERC-8004 agents by on-chain reputation,
 surfaces activity trends, and flags x402-payable agents.

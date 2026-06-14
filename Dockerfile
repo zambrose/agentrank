@@ -1,5 +1,5 @@
 # =============================================================================
-# Dockerfile — AgentRank on Cloud Run (Next.js standalone)
+# Dockerfile — AgentDex on Cloud Run (Next.js standalone)
 # =============================================================================
 # Serves the materialized 34k-agent snapshot + API + frontend. No GCP creds are
 # required at runtime (the snapshot is baked in); outbound egress is used for

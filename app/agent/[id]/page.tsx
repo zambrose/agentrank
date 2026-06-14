@@ -97,7 +97,7 @@ export default async function AgentDetailPage({ params }: Props) {
             href="/"
             className="text-xs text-slate-500 hover:text-accent transition-colors"
           >
-            ← AgentRank
+            ← AgentDex
           </Link>
           <span className="text-slate-700">/</span>
           <span className="text-sm text-slate-400">Agent #{agent.agentId}</span>

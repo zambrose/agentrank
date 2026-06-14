@@ -1,4 +1,4 @@
-# AgentRank — 3-Minute Demo Script
+# AgentDex — 3-Minute Demo Script
 
 ETHGlobal NY 2026 | Google Cloud + ENS bounties
 
@@ -25,7 +25,7 @@ LIMIT 10;
 
 **Say:** "ERC-8004 defines an on-chain agent economy: any AI agent can
 register on Ethereum, receive reputation feedback, and advertise payment
-support. AgentRank is a live explorer built on top of that data."
+support. AgentDex is a live explorer built on top of that data."
 
 **Show:** Switch to BigQuery console. Paste the SQL and click Run.
 

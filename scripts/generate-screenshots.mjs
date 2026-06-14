@@ -1,7 +1,7 @@
 // =============================================================================
 // scripts/generate-screenshots.mjs — submission screenshots from REAL data
 // =============================================================================
-// Renders three 1600x1000 views of the actual AgentRank UI, populated entirely
+// Renders three 1600x1000 views of the actual AgentDex UI, populated entirely
 // from data/agent_summary.json (no invented values). Faithful representations
 // for the submission's Screenshots slot; prefer live captures if the site is up.
 //   assets/shot-1-home.png       homepage: stats + reputation flow + leaderboard
@@ -42,7 +42,7 @@ function header() {
   return `
     <rect x="0" y="0" width="1600" height="92" fill="${C.ink}"/>
     <line x1="0" y1="92" x2="1600" y2="92" stroke="${C.line}" stroke-width="1"/>
-    ${T(56, 44, "AgentRank", { size: 26, w: "bold", fill: C.accent })}
+    ${T(56, 44, "AgentDex", { size: 26, w: "bold", fill: C.accent })}
     ${T(56, 70, "ERC-8004 Agent Economy Explorer · Ethereum mainnet", { size: 13, fill: C.dim })}
     ${stat(1170, STATS.agents, "agents registered")}
     ${stat(1330, STATS.feedback, "feedback events", C.accent)}

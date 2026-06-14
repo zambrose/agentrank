@@ -1,4 +1,4 @@
-# AgentRank — Locked Output Schema
+# AgentDex — Locked Output Schema
 
 This is the contract the API and frontend consume. The TypeScript source of
 truth is [`shared/schema.ts`](./schema.ts) (`AgentSummary`). The BigQuery

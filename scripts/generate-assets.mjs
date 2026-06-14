@@ -1,5 +1,5 @@
 // =============================================================================
-// scripts/generate-assets.mjs — AgentRank submission images (logo + cover)
+// scripts/generate-assets.mjs — AgentDex submission images (logo + cover)
 // =============================================================================
 // Renders brand-matched PNGs via sharp (SVG → PNG). Palette mirrors the app:
 //   ink #0a0e17 · panel #121826 · accent #4f8cff · good #34d399 · warn #fbbf24
@@ -96,7 +96,7 @@ const cover = `
   <!-- reputation-flow network (right) -->
   <g>${edgeSvg}${nodeSvg}</g>
   <!-- wordmark -->
-  <text x="96" y="250" font-family="DejaVu Sans" font-weight="bold" font-size="108" fill="#f1f5f9">Agent<tspan fill="${C.accent}">Rank</tspan></text>
+  <text x="96" y="250" font-family="DejaVu Sans" font-weight="bold" font-size="108" fill="#f1f5f9">Agent<tspan fill="${C.accent}">Dex</tspan></text>
   <text x="100" y="312" font-family="DejaVu Sans" font-size="30" fill="${C.slate}">ERC-8004 Agent Economy Explorer · Ethereum mainnet</text>
   <text x="100" y="356" font-family="DejaVu Sans Mono" font-size="20" fill="#64748b">BigQuery reputation ranking · x402 flags · live ENS resolution</text>
   ${chip(100, STATS.agents, "agents ranked", "#f1f5f9")}
